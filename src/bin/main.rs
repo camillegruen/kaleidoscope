@@ -8,13 +8,10 @@
 #![deny(clippy::large_stack_frames)]
 
 use esp_hal::clock::CpuClock;
-use esp_hal::{
-    delay::Delay,
-    gpio::{Level, Output, OutputConfig, Input, InputConfig},
-    main,
-};
+use esp_hal::gpio::{Level, Output, OutputConfig};
+use esp_hal::main;
 use esp_hal::time::{Duration, Instant};
-use esp_println::println;
+
 
 #[panic_handler]
 fn panic(_: &core::panic::PanicInfo) -> ! {
@@ -31,33 +28,18 @@ esp_bootloader_esp_idf::esp_app_desc!();
 )]
 #[main]
 fn main() -> ! {
-    // generator version: 1.3.0
-    // generator parameters: --chip esp32c6
-
     let config = esp_hal::Config::default().with_cpu_clock(CpuClock::max());
     let peripherals = esp_hal::init(config);
 
-    let button = Input::new(peripherals.GPIO8, InputConfig::default());
-    let mut led1 = Output::new(peripherals.GPIO1, Level::Low, OutputConfig::default());
-
-
-    // let delay = Delay::new();
+    let mut led = Output::new(peripherals.GPIO2, Level::High, OutputConfig::default());
 
     loop {
-        led1.set_high();
-        // if button.is_low() {
-        //     led1.set_high();
-        // }
-        // else {
-        //     led1.set_low();
-        // }
+        led.toggle();
+        blocking_delay(Duration::from_millis(500));
     }
+}
 
-
-    // loop {
-    //     println!("Hello World");
-    //     delay.delay_millis(1500);
-    // }
-
-    // for inspiration have a look at the examples at https://github.com/esp-rs/esp-hal/tree/esp-hal-v1.1.0/examples
+fn blocking_delay(duration: Duration) {
+    let delay_start = Instant::now();
+    while delay_start.elapsed() < duration {}
 }
