@@ -12,10 +12,14 @@ path = "./src/bin/main.rs"
 esp-hal = { version = "~1.1.0", features = ["esp32c6", "unstable"] }
 esp-bootloader-esp-idf = { version = "0.5.0", features = ["esp32c6"] }
 esp-println = { version = "0.17.0", features = ["esp32c6"] }
+esp-backtrace = { version = "0.19.0", features = ["esp32c6", "panic-handler", "println"] }
 
 critical-section = "1.2.0"
 embedded-hal = "1.0.0"
-esp-backtrace = { version = "0.19.0", features = ["esp32c6", "panic-handler", "println"] }
+esp-rtos = { version = "0.3.0", features = ["esp32c6", "embassy"] }
+embassy-executor = "0.10.0"
+embassy-time = "0.5.1"
+
 
 # For fine tuning these settings, please refer to https://doc.rust-lang.org/cargo/reference/profiles.html
 [profile.dev]
