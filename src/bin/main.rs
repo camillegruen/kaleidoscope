@@ -47,7 +47,6 @@ fn main() -> ! {
         led1.set_high();
         // if button.is_low() {
         //     led1.set_high();
-
         // }
         // else {
         //     led1.set_low();
